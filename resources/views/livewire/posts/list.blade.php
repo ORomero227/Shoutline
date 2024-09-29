@@ -32,6 +32,12 @@ new class extends Component {
         $this->editing = null;
         $this->getPosts();
     } 
+
+    public function delete(Post $post): void {
+        $this->authorize('delete', $post);
+        $post->delete();
+        $this->getPosts();
+    }
 }; ?>
 
 <div class="mt-6 bg-white shadow-sm rounded-lg divide-y"> 
@@ -61,6 +67,9 @@ new class extends Component {
                             <x-slot name="content">
                                 <x-dropdown-link wire:click="edit({{ $post->id }})">
                                     {{ __('Edit') }}
+                                </x-dropdown-link>
+                                <x-dropdown-link wire:click="delete({{ $post->id }})">
+                                    {{ __('Delete') }}
                                 </x-dropdown-link>
                             </x-slot>
                         </x-dropdown>
